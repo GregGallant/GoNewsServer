@@ -8,4 +8,4 @@ This is a Go news server I wrote to handle the any and all webz.io content along
 
 The news file checks for a date file and writes the latest news based upon an filterable query.  You can use a customizable query, write your own AI parser or just use a basic content parser to add to your news server.
 
-You can view it in action here using a Svelte frontend: http://www.gallantone.com/news 
+You can view it in action here using a Svelte frontend: https://www.gallantone.com/news 

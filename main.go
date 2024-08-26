@@ -39,17 +39,6 @@ func handleRequests() {
 	log.Fatal(http.ListenAndServe(":8080", handler))   
 }
 
-func startSomewhere(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Start Somewhere" + r.Method)
-	art.Articles = []art.Article{
-		{Title: "Hello", Desc: "Article Description", Content: "Article Content"},
-		{Title: "Hello 2", Desc: "Article Description", Content: "Article Content"},
-	}
-	err := json.NewEncoder(w).Encode(art.Articles)
-	if err != nil {
-		log.Fatalln("Error on encoding startSomewhere of all things")
-	}
-}
 
 // serveNews serves the news
 func serveNews(w http.ResponseWriter, r *http.Request) {

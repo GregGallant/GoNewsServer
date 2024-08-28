@@ -5,13 +5,14 @@ import (
 	"errors"
 	gcal "gallantone.com/main/calendar"
 	"html"
-	"io/ioutil"
+	"io"
 	"log"
 	"os"
 	"regexp"
 	"strconv"
 )
 
+// Article is each base news data
 type Article struct {
 	Title   string `json:"Title"`
 	Desc    string `json:"desc"`
@@ -24,6 +25,7 @@ const newsFile = "genericNews.txt"
 
 var Articles []Article
 
+// PrepareNewsService prepares the writes
 func PrepareNewsService() []byte {
 	newsCheck()
 
@@ -37,7 +39,7 @@ func PrepareNewsService() []byte {
 			log.Fatal(err)
 		}
 	}()
-	theNews, err := ioutil.ReadAll(newsfile)
+	theNews, err := io.ReadAll(newsfile)
 	if err != nil {
 		log.Fatalf("unable to read date file: %v", err)
 	}
@@ -88,7 +90,7 @@ func newsCheck() {
 			log.Fatal(err)
 		}
 	}()
-	theDate, err := ioutil.ReadAll(datefile)
+	theDate, err := io.ReadAll(datefile)
 	if err != nil {
 		log.Fatalf("unable to read date file: %v", err)
 	}

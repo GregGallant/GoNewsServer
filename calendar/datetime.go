@@ -1,3 +1,4 @@
+// Package calendar handles dates and times
 package calendar
 
 import (

@@ -1,3 +1,4 @@
+// Package articles handles news
 package articles
 
 import (

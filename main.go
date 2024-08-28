@@ -65,12 +65,13 @@ func serveNews(w http.ResponseWriter, r *http.Request) {
 }
 
 
-
+// main is main
 func main() {
 	fmt.Println("GallantOne Core Amd64")
 	handleRequests()
 }
 
+// favicon for chi sever recognition
 func favicon(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "../<yourfaviconlocation>/favicon.ico")
 }

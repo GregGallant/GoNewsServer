@@ -12,6 +12,7 @@ import (
 	"os"
 )
 
+// handleRequests handles requests
 func handleRequests() {
 
 	logger := log.New(os.Stdout, "http: ", log.LstdFlags)

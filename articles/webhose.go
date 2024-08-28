@@ -48,6 +48,7 @@ type Posts struct {
 	Updated              string           `json:"updated"`
 }
 
+// ExternalImages for external images
 type ExternalImages struct {
 	URL      string   `json:"url"`
 	MetaInfo string   `json:"meta_info"`
@@ -93,12 +94,14 @@ type Thread struct {
 	Social            Social   `json:"social"`
 }
 
+// Reach controls viewers
 type Reach struct {
 	PerMillion float32   `json:"per_million"`
 	PageViews  PageViews `json:"page_views"`
 	Updated    string    `json:"updated"`
 }
 
+// PageViews SEO related
 type PageViews struct {
 	PerMillion float32 `json:"per_million"`
 	PerUser    float32 `json:"per_user"`

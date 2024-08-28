@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-// getServerTime generic Time method func Date(year int, month Month, day, hour, min, sec, nsec int, loc *Location) Time
+// GetServerDate generic Time method func Date(year int, month Month, day, hour, min, sec, nsec int, loc *Location) Time
 func GetServerDate() time.Time {
 	tn := time.Now()
 	timeDate := time.Date(tn.Year(), tn.Month(), tn.Day(), tn.Hour(), tn.Minute(), tn.Second(), tn.Nanosecond(), tn.Location())

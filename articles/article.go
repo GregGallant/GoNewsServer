@@ -147,7 +147,18 @@ func writeNewsDateFile() {
 	logger := log.New(os.Stdout, "http: ", log.LstdFlags)
 	newsDatefile := filepath + newsDateFile
 	lastNewsDate := gcal.GetServerDate().String()
-
+	
+	// Check if directory exists, if not create it
+	if _, err := os.Stat(filepath); errors.Is(err, os.ErrNotExist) {
+		if err != nil {
+			dirErr := os.Mkdir(filepath, 0750)
+			if dirErr != nil && !os.IsExist(err) {
+				logger.Println("wtf no dir")
+				log.Fatal(dirErr)
+			}
+		}
+	}
+	
 	ferr := os.WriteFile(newsDatefile, []byte(lastNewsDate), 0667)
 	if ferr != nil {
 		logger.Println("DATE FILE NOT CREATED...")

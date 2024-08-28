@@ -12,6 +12,7 @@ func GetServerDate() time.Time {
 	return timeDate
 }
 
+// convertStringDate converts date to string
 func convertStringDate(fileDate string) time.Time {
 	layout := "2006-01-02 15:04:05 +0000 UTC"
 	parsedDate, err := time.Parse(layout, fileDate)
@@ -21,11 +22,13 @@ func convertStringDate(fileDate string) time.Time {
 	return parsedDate
 }
 
+// add6HoursToDate adds six hours to the date
 func add6HoursToDate(cdate time.Time) time.Time {
 	nextNews := cdate.Add(time.Hour * 6)
 	return nextNews
 }
 
+// DateIsExpired checks for expired date
 func DateIsExpired(someDate string) bool {
 	parsedDate := convertStringDate(someDate)
 	forwardCheck := add6HoursToDate(parsedDate)

@@ -144,8 +144,8 @@ func InitWebhoseRequest() News {
 		log.Fatal(werr)
 	}
 
-	// Set a timestamp via method if you want updated news
-	nTimestamp := 1722473457731
+	nTimestamp := gcal.GetPastTimestamp(36)
+	logger.Println("past timestamp: " + strconv.Itoa(int(nTimestamp)))
 
 	// Query String Parameters
 	params := url.Values{}

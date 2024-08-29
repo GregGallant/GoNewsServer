@@ -13,6 +13,32 @@ func GetServerDate() time.Time {
 	return timeDate
 }
 
+// GetServerTimestamp returns current time (NOW) as timestamp
+func GetServerTimestamp() int64 {
+	tn := time.Now()
+	timeDate := time.Date(tn.Year(), tn.Month(), tn.Day(), tn.Hour(), tn.Minute(), tn.Second(), tn.Nanosecond(), tn.Location())
+	timeStamp := timeDate.UnixMilli()
+	return timeStamp
+}
+
+// GetFutureTimestamp gets timestamp six hours ahead
+func GetFutureTimestamp() int64 {
+	tn := time.Now()
+	timeDate := time.Date(tn.Year(), tn.Month(), tn.Day(), tn.Hour(), tn.Minute(), tn.Second(), tn.Nanosecond(), tn.Location())
+	futureTime := addHoursToDate(timeDate, 24)
+	timeStamp := futureTime.UnixMilli()
+	return timeStamp
+}
+
+// GetPastTimestamp gets a timestamp from specified number of hours ago
+func GetPastTimestamp(ghours int) int64 {
+	tn := time.Now()
+	timeDate := time.Date(tn.Year(), tn.Month(), tn.Day(), tn.Hour(), tn.Minute(), tn.Second(), tn.Nanosecond(), tn.Location())
+	futureTime := removeHoursFromDate(timeDate, ghours)
+	timeStamp := futureTime.UnixMilli()
+	return timeStamp
+}
+
 // convertStringDate converts date to string
 func convertStringDate(fileDate string) time.Time {
 	layout := "2006-01-02 15:04:05 +0000 UTC"
@@ -23,16 +49,33 @@ func convertStringDate(fileDate string) time.Time {
 	return parsedDate
 }
 
-// add6HoursToDate adds six hours to the date
-func add6HoursToDate(cdate time.Time) time.Time {
-	nextNews := cdate.Add(time.Hour * 6)
+
+// addHoursToDate adds specified number of hours to date
+func addHoursToDate(cdate time.Time, ihours int) time.Time {
+	durationStr := strconv.Itoa(ihours) + "h"
+	ghours, err := time.ParseDuration(durationStr)
+	if err != nil {
+		fmt.Printf("%v %s", err, " :addHours")
+	}
+	nextNews := cdate.Add(ghours)
 	return nextNews
 }
 
-// DateIsExpired checks for expired date
+// removeHoursFromDate removes specified hours to date
+func removeHoursFromDate(cdate time.Time, ihours int) time.Time {
+	durationStr := strconv.Itoa(ihours) + "h"
+	ghours, err := time.ParseDuration(durationStr)
+	if err != nil {
+		fmt.Printf("%v %s", err, " :removeHours")
+	}
+	pastDate := cdate.Add(-(ghours))
+	return pastDate
+}
+
+// DateIsExpired checks expired dates
 func DateIsExpired(someDate string) bool {
 	parsedDate := convertStringDate(someDate)
-	forwardCheck := add6HoursToDate(parsedDate)
+	forwardCheck := addHoursToDate(parsedDate, 24)
 	date2Check := GetServerDate()
 
 	return date2Check.After(forwardCheck)

@@ -6,7 +6,7 @@ Webz.io is a news content API, however it did not have any support for the Go la
 
 This is a Go news server I wrote to handle any and all webz.io content along with a chi http server to route.  This can be used in a docker container or run bare metal.  Originally I ran the binary as a System-D process but now I just use Docker. 
 
-The news object is called in article.go as a receiver for orgazational methods, a quick algorithm to remove duplicate articles, image url handlers depending on the CMS of news aggregates and external websites, etc.
+The news object I'm calling in article.go is being used as a receiver for a few orgazational methods: a quick algorithm to remove duplicate articles, image url handlers depending on the CMS of news aggregates and external websites, etc.  This is how I'm running it on my server, the version here will have to be updated depending on your file system or docker container.
 
 The news file checks for a date file and writes the latest news based upon an filterable query.  You can use a customizable query, write your own AI parser or just use a basic content parser to add to your news server.
 

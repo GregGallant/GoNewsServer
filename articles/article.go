@@ -177,10 +177,8 @@ func printLatestNews() {
 	}
 }
 
-// still want oNews as result... reorg as interface
-//func organizeNews(nm NewsModel) {}
-//func cleanPostTitle(oNews News, i int) string { }
 
+// cleanImageURL cleans the image url link of any non utf-8 chars and any strange external cms stuff
 func (n News) cleanImageURL(i int) string {
 
 	ampReg := regexp.MustCompile(`&amp;`)

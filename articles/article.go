@@ -161,14 +161,6 @@ func printLatestNews() {
 		postsToDelete := oNews.createDelArr(i, looseCompare)
 
 		oNews.Posts = oNews.delPosts(postsToDelete)
-
-		//logger.Printf("Posts to delete: %v", postsToDelete)
-		/*
-			for j := len(postsToDelete); j > 0; j-- {
-				logger.Printf("Posts to delete: %v", postsToDelete[j-1])
-				oNews.Posts = slices.Delete(oNews.Posts, postsToDelete[j-1], postsToDelete[j-1]+1)
-			}
-		*/
 	}
 
 	newshose, err := json.Marshal(oNews)

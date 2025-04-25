@@ -123,32 +123,23 @@ func printLatestNews() {
 
 	oNews := InitWebhoseRequest()
 
-	for i, eachPost := range oNews.Posts {
+	for i, _ := range oNews.Posts {
 
 		// Since the range changes, handle the updated range
 		if i == len(oNews.Posts) {
 			break
 		}
 
-		// Emojis and Unicode (all of this will change within interface soon...)
-		var emojiRx = regexp.MustCompile(`[\x{10440}-\x{1F7FF}|[\x{1EF3}-\x{26FF}]|[\x{0021}-\x{0029}]`)
-		textToEscape := emojiRx.ReplaceAllString(eachPost.Text, ``)
+		// Emojis and Unicode cleaning
+		oNews.Posts[i].Text = oNews.cleanArText(i)
 
-		// line breaks
-		var lbreaks = regexp.MustCompile(`\n`)
-		textToEscape = lbreaks.ReplaceAllString(textToEscape, `<br style="margin:0 0 20px 0;"/>`)
+		// Clean URLs
+		oNews.Posts[i].URL = oNews.cleanUrls(i)
 
-		urlToEscape := eachPost.URL
-		for j, eachElink := range eachPost.ExternalLinks {
-			oNews.Posts[i].ExternalLinks[j] = html.EscapeString(eachElink)
-		}
-		oNews.Posts[i].Text = textToEscape
-		oNews.Posts[i].URL = html.EscapeString(urlToEscape)
+		// Clean titles
+		oNews.Posts[i].Thread.Title = oNews.cleanTitle(i)
 
-		r := regexp.MustCompile(`[\x{FFFD}]+`)
-		oNews.Posts[i].Thread.Title = r.ReplaceAllString(oNews.Posts[i].Thread.Title, ``)
-
-
+		// Clean image URLs
 		oNews.Posts[i].Thread.MainImage = oNews.cleanImageURL(i)
 
 		// Create rune of string
@@ -175,6 +166,50 @@ func printLatestNews() {
 	if ferr != nil {
 		log.Fatal(ferr)
 	}
+}
+
+
+// cleanUrls cleans each URL of special chars
+func (n News) cleanUrls(i int) string {
+	urlToEscape := n.Posts[i].URL
+
+	for j, eachElink := range n.Posts[i].ExternalLinks {
+		n.Posts[i].ExternalLinks[j] = html.EscapeString(eachElink)
+	}
+	//oNews.Posts[i].Text = html.EscapeString(textToEscape)
+	return html.EscapeString(urlToEscape)
+}
+
+// cleanArText sort of cleans the article text
+func (n News) cleanArText(i int) string {
+
+	// Emojis and Unicode
+	var emojiRx = regexp.MustCompile(`[\x{10440}-\x{1F7FF}|[\x{1EF3}-\x{26FF}]|[\x{0021}-\x{0029}]`)
+	textToEscape := emojiRx.ReplaceAllString(n.Posts[i].Text, ``)
+
+	// line breaks
+	var lbreaks = regexp.MustCompile(`\n`)
+	textToEscape = lbreaks.ReplaceAllString(textToEscape, `<br style="margin:0 0 20px 0;"/>`)
+
+	return textToEscape
+}
+
+// cleanTitle cleans the titles of special chars
+func (n News) cleanTitle(i int) string {
+
+	var apos = regexp.MustCompile(`&quot;`)
+	n.Posts[i].Title = apos.ReplaceAllString(n.Posts[i].Title, `'`)
+
+	r := regexp.MustCompile(`[\x{FFFD}]+`)
+	n.Posts[i].Thread.Title = r.ReplaceAllString(n.Posts[i].Thread.Title, ``)
+	//	matches := r.FindString("fds�adfs")
+	/* oNews.Posts[i].Title = strings.ToValidUTF8(oNews.Posts[i].Title, "") */
+
+	// Don't need to do this
+	//arTrans := transform.Chain(norm.NFD, runes.Remove(runes.In(unicode.Mn)), norm.NFC)
+	//n.Posts[i].Thread.Title, _, _ = transform.String(arTrans, n.Posts[i].Thread.Title)
+
+	return n.Posts[i].Thread.Title
 }
 
 

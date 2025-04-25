@@ -123,7 +123,7 @@ func printLatestNews() {
 
 	oNews := InitWebhoseRequest()
 
-	for i, _ := range oNews.Posts {
+	for i := range oNews.Posts {
 
 		// Since the range changes, handle the updated range
 		if i == len(oNews.Posts) {

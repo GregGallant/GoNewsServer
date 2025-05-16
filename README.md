@@ -10,6 +10,6 @@ The news object I'm calling in article.go is being used as a receiver for a few 
 
 The news file checks for a date file and writes the latest news based upon an filterable query.  You can use a customizable query, write your own AI parser or just use a basic content parser to add to your news server.
 
-The most recent addition was an AI starting point using prediction guards embedded model for LLMs, with an update to the EmbedInputType interface that's currently used in their latest version.  This was only used for testing and understanding how to use vectorized chunks, cosine similarity and a launch pad to use Google's Vertex AI.
+The most recent addition was an AI starting point using Prediction Guard's(https://predictionguard.com/) embedded models for LLMs, with an update to the EmbedInputType interface that's currently used in their latest version.  This was only used for testing and understanding how to use vectorized chunks, cosine similarity and a launch pad to use Google's Vertex AI.
 
 You can view it in action here using a React Router frontend: https://www.cronvega.com/news 

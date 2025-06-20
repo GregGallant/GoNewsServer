@@ -24,7 +24,7 @@ type VectorizedChunk struct {
 	Metadata string    `json:"metadata"`
 }
 
-var nvidiaAPIKey = "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"
+var nvidiaAPIKey = "nvapi-NZk30vtHNXcMhh5h_O..."
 
 var embeddingModel = "bge-m3"
 
